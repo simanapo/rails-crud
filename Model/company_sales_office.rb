@@ -7,7 +7,6 @@ class CompanySalesOffice < ApplicationRecord
   ##
   # リレーション
   ##
-
   belongs_to :company, optional: true
 
   ##
@@ -45,7 +44,6 @@ class CompanySalesOffice < ApplicationRecord
   ##
   # scopes
   ##
-
   # 会社（内部）
   scope :with_inner_company, -> { joins(:company).eager_load(:company) }
 

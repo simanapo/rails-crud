@@ -7,14 +7,12 @@ class Company < ApplicationRecord
   ##
   # リレーション
   ##
-
   has_many :company_sales_offices
   accepts_nested_attributes_for :company_sales_offices, allow_destroy: true
 
   ##
   # バリデーション
   ##
-
   validates :company_name,
     presence: true,
     length: { maximum: 150 }
@@ -31,7 +29,6 @@ class Company < ApplicationRecord
   ##
   # scopes
   ##
-
   # 会社営業所(内部)
   scope :with_inner_company_sales_offices, -> { joins(:company_sales_offices).eager_load(:company_sales_offices) }
 
