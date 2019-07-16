@@ -1,0 +1,69 @@
+<!-- app\views\admin\companies\_companies.html.erb -->
+
+<!-- viewの一例 -->
+<!-- 編集ブロック -->
+<div class="basic_input-box edit_box js-open_lease">
+  <%= form_with model: company, url: update_confirm_company_path(company),
+      remote: true, data: { method: :update_confirm } do |f| %>
+    <div class="input-box">
+      <%= f.hidden_field :updated_at, value: company.updated_at %>
+      <%= f.hidden_field :id, value: company.id %>
+      <dl class="mb_15">
+        <dt>
+          <p>会社名</p><span class="required">*</span>
+        </dt>
+        <dd>
+          <div class="form_colume">
+            <%= f.text_field :company_name, placeholder: "例：hoge株式会社", class: %i(form_input) %>
+          </div>
+        </dd>
+      </dl>
+      <dl class="mb_15">
+        <dt>
+          <p>会社（カナ）</p><span class="required">*</span>
+        </dt>
+        <dd>
+          <div class="form_colume">
+            <%= f.text_field :company_name_kana, placeholder: "例：hoge株式会社", class: %i(form_input) %>
+          </div>
+        </dd>
+      </dl>
+      <div class="" data-method="update_error_message"></div>
+    </div>
+
+    <div class="btn_w btn_box">
+      <%= f.button t('view.messages.cancel'), class: %i(js-address_close btn_white btn_big float_l), type: 'button' %>
+      <%= f.button t('view.messages.do_edit'), id: "modal-open", class: %i(btn_blue btn_big float_r), data: { remodal: "edit01-1" }  %>
+    </div>
+  <% end %>
+</div>
+<!-- /編集ブロック -->
+
+<!-- 編集確認モーダル -->
+<div id="remodal" class="remodal modal_common" data-remodal-id="modal-edit-confirm" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <div class="modal_text">
+    <p><%= t('view.messages.master.update_confirmation') %></p>
+  </div>
+  <%= form_tag company_path(0), method: :put, data: { method: :update }, remote: true do %>
+    <input type="hidden" name="company[id]" id="id" >
+    <input type="hidden" name="company[updated_at]" id="updated_at" >
+    <input type="hidden" name="company[company_name]" id="company_name" >
+    <input type="hidden" name="company[company_name_kana]" id="company_name_kana" >
+    <div class="modal_cancel">
+      <button type="button" class="btn_white btn_big float_l" data-remodal-action="cancel"><%= t('view.messages.cancel') %></button>
+      <button type="submit" id="modal-open12" class="btn_blue btn_big float_r"><%= t('view.buttons.update') %></button>
+    </div>
+  <% end %>
+</div>
+<!-- /編集確認モーダル -->
+
+<!-- 編集完了モーダル -->
+<div id="remodal" class="remodal modal_common" data-remodal-id="modal-edit-complete" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+  <div class="modal_text">
+    <p><%= t('view.messages.master.update_completed') %></p>
+  </div>
+  <div class="modal_cancel">
+    <%= button_tag t('view.buttons.close'), class: "btn_white btn_big", onclick: "location.href=\'#{ companies_path }\'", type: :button ,data: {"turbolinks" => false} %>
+  </div>
+</div>
+<!-- /編集完了モーダル -->
